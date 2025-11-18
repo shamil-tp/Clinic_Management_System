@@ -5,19 +5,23 @@ const cSchema = new mongoose.Schema({
     id:String,
     doctor:String,
     patient:String,
-    date:String,
-    time:String,
+    patientPhone:String,
+    date:Date,
+    // time:Time,
     token:Number,
 
     symptoms:String,
-    desc:String,
+    description:String,
     prescription:String,
 
     prescriptionPurchased:{
         type:Boolean,
         default:false
     },
-    prescriptionAmount:Number
+    prescriptionAmount:{
+        type:Number,
+        default:0
+    }
 })
 
 module.exports =  mongoose.model('Consultation', cSchema);

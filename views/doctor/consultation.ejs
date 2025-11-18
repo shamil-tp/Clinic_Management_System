@@ -1,12 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Consultation</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
 
 </head>
+
 <body>
     <div class="row">
         <div class="col-12">
@@ -14,9 +17,63 @@
         </div>
     </div>
     <div class="container">
-        <div class="col-12">
-            <div class="text-center h1">Consultation</div>
-        </div>
+        <form class="row" action="/doctor/addconsultation" method="post">
+            <div class="col-6 offset-3">
+                <div class="text-center h1">Consultation Summary</div>
+            </div>
+            <div class="col-6 offset-3">
+                <div class="mb-3">
+                    <label for="exampleInputEmail1" class="form-label">Doctor: </label>
+                    <input type="text" class="form-control" aria-describedby="emailHelp" name="doctor" value="<%=username%>" readonly>
+                </div>
+            </div>
+            <div class="col-3 offset-3">
+                <div class="mb-3">
+                    <label for="exampleInputEmail1" class="form-label">Patient: </label>
+                    <input type="text" class="form-control" aria-describedby="emailHelp" name="patient">
+                </div>
+            </div>
+            <div class="col-3">
+                <div class="mb-3">
+                    <label for="exampleInputEmail1" class="form-label">Patient Phone: </label>
+                    <input type="tel" class="form-control" aria-describedby="emailHelp" name="patientPhone">
+                </div>
+            </div>
+            <div class="col-3 offset-3">
+                <div class="mb-3">
+                    <div class="form-floating">
+                        <textarea class="form-control" placeholder="symptoms found" id="floatingTextarea2"
+                            style="height: 100px" name="symptoms"></textarea>
+                        <label for="floatingTextarea2">Symptoms</label>
+                    </div>
+                </div>
+            </div>
+            <div class="col-3">
+                <div class="mb-3">
+                    <div class="form-floating">
+                        <textarea class="form-control" placeholder="Prefered Prescription" id="floatingTextarea2"
+                            style="height: 100px" name="prescription"></textarea>
+                        <label for="floatingTextarea2">Prefered Prescription</label>
+                    </div>
+                </div>
+            </div>
+            <div class="col-6 offset-3">
+                <div class="mb-3">
+                    <div class="form-floating">
+                        <textarea class="form-control" placeholder="detailed description" id="floatingTextarea2"
+                            style="height: 100px" name="description"></textarea>
+                        <label for="floatingTextarea2">Description</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-6 offset-3">
+                <div class="mb-3 d-grid gap-2">
+                    <button class="btn btn-outline-success" type="submit">Add Consultation Summary</button>
+                </div>
+            </div>
+        </form>
     </div>
 </body>
+
 </html>

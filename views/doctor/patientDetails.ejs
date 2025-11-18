@@ -1,12 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Patient Details</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+        crossorigin="anonymous"></script>
 
 </head>
+
 <body>
     <div class="row">
         <div class="col-12">
@@ -17,6 +23,90 @@
         <div class="col-12">
             <div class="text-center h1">Patient Details</div>
         </div>
+        <div class="col-8 offset-2">
+            <table class="table table-striped-columns table-bordered">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">First</th>
+                        <th scope="col">Last</th>
+                        <th scope="col">Handle</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <%patientConsultationDetails.forEach((p,index)=>{ %>
+                        <tr>
+                            <th scope="row">
+                                <%=index+1%>
+                            </th>
+                            <td>
+                                <%=p.patientName%>
+                            </td>
+                            <td>
+                                <%=p.patientPhone%>
+                            </td>
+                            <td>
+                                <!-- Button trigger modal -->
+                                <div class="d-grid gap-2">
+                                    <a href="/doctor/viewpatient/<%=p.id%>" type="button" class="btn btn-dark"
+                                        data-bs-toggle="modal" data-bs-target="#consultationModal_<%=p.patientPhone%>">
+                                        View Consultation
+                                    </a>
+                                </div>
+
+                                <!-- Modal -->
+                                <div class="modal fade" id="consultationModal_<%=p.patientPhone%>" data-bs-backdrop="static"
+                                    data-bs-keyboard="false" tabindex="-1" aria-labelledby="modalLabel_<%=p.patientPhone%>"
+                                    aria-hidden="true">
+                                    <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h1 class="modal-title fs-5" id="modalLabel_<%=p.patientPhone%>">Consultation
+                                                    Summary For <%=p.patientName%> </h1>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                    aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <table class="table table-striped-columns table-bordered">
+                                                    <thead>
+                                                        <tr>
+                                                            <th scope="col">Date</th>
+                                                            <th scope="col">Symptoms</th>
+                                                            <th scope="col">Description</th>
+                                                            <th scope="col">Prescription</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <%p.consultation.forEach((c)=>{%>
+                                                                <tr>
+                                                            <th scope="row"><%=c.consultationDate%></th>
+                                                            <td><%=c.symptoms%></td>
+                                                            <td><%=c.description%></td>
+                                                            <td><%=c.prescription%></td>
+                                                        </tr>
+                                                        <%})%>
+                                                            
+                                                
+                                                        
+                                                    </tbody>
+                                                </table>
+
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary"
+                                                    data-bs-dismiss="modal">Close</button>
+                                                <!-- <button type="button" class="btn btn-primary">Understood</button> -->
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <%}) %>
+                </tbody>
+            </table>
+        </div>
     </div>
 </body>
+
 </html>

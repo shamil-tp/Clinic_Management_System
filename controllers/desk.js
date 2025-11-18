@@ -89,7 +89,7 @@ exports.AddPatient = async (req,res)=>{
 
         await Patient.create({
             id:Date.now(),
-            name:name,
+            name:name.toUpperCase(),
             phone:phone,
             age:age,
             gender:gender,

@@ -1,5 +1,5 @@
 const express = require('express')
-const { GetDoctorHome, PrescriptionPurchased, GetBilling, GetPayment, GetPharmHome } = require('../controllers/pharm')
+const { PrescriptionPurchased, GetBilling, GetPayment, GetPharmHome, Billing, AmountReset } = require('../controllers/pharm')
 const router = express.Router()
 
 router
@@ -8,11 +8,15 @@ router
 router
     .route('/billing')
     .get(GetBilling)
+    .post(Billing)
 router
     .route('/payment')
     .get(GetPayment)
 router
     .route('/payment/:cid')
     .get(PrescriptionPurchased)
+router
+    .route('/payment/reset/:cid')
+    .get(AmountReset)
 
 module.exports = router

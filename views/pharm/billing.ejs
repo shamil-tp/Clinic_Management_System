@@ -2,26 +2,23 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Billing</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous" />
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
         crossorigin="anonymous"></script>
-
 </head>
 
 <body>
     <div class="row">
-        <div class="col-12">
-            <%- include('navbar')%>
-        </div>
+        <div class="col-12"><%- include('navbar')%></div>
     </div>
     <div class="container">
         <div class="col-12">
-            <div class="text-center h1">Patient Details</div>
+            <div class="text-center h1">Billing</div>
         </div>
         <div class="col-8 offset-2">
             <table class="table table-striped-columns table-bordered">
@@ -30,7 +27,7 @@
                         <th scope="col">id</th>
                         <th scope="col">Date</th>
                         <th scope="col">Patient Name</th>
-                        <th scope="col">Prescription</th>
+                        <!-- <th scope="col">Prescription</th> -->
                         <th scope="col">Amount</th>
                         <th scope="col">Purchased</th>
                     </tr>
@@ -38,12 +35,98 @@
                 <tbody>
                     <%consultation.forEach((c)=>{%>
                         <tr>
-                            <th scope="row"><%=c.id%></th>
-                            <td><%=new Date(c.date).toLocaleDateString()%></td>
-                            <td><%=c.patient%></td>
-                            <td><%=c.prescription%></td>
-                            <td><%=c.prescriptionAmount%></td>
-                            <td><a href="/pharm/payment/<%=c.id%>" class="btn <%= c.prescriptionPurchased ? 'btn-success' : 'btn-danger' %>" onclick="toggleButton.call(this)" id="<%=c.id%>"><%= c.prescriptionPurchased ? 'yes' : 'No' %></a></td>
+                            <th scope="row">
+                                <%=c.id%>
+                            </th>
+                            <td>
+                                <%=new Date(c.date).toLocaleDateString()%>
+                            </td>
+                            <td>
+                                <%=c.patient%>
+                            </td>
+                            <td>
+                                <%=c.prescriptionAmount%>
+                            </td>
+                            <td>
+                                <!-- Button trigger modal -->
+                                <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                    data-bs-target="#modal-<%=c.id%>">
+                                    Set Amount
+                                </button>
+
+                                <!-- Modal -->
+                                <form action="/pharm/billing" method="post" class="modal fade" id="modal-<%=c.id%>" data-bs-backdrop="static"
+                                    data-bs-keyboard="false" tabindex="-1"
+                                    aria-labelledby="staticBackdropLabel-<%=c.id%>" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h1 class="modal-title fs-5" id="staticBackdropLabel-<%=c.id%>">
+                                                    Modal title
+                                                </h1>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                    aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="container-fluid">
+                                                    <div class="row">
+                                                        <div class="col-6">
+                                                            <div class="mb-3">
+                                                                <label for="exampleInputEmail1"
+                                                                    class="form-label">Consultation Id:
+                                                                </label>
+                                                                <input type="text" class="form-control"
+                                                                    aria-describedby="emailHelp" name="cid"
+                                                                    value="<%=c.id%>" readonly />
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-6">
+                                                            <div class="mb-3">
+                                                                <label for="exampleInputEmail1"
+                                                                    class="form-label">Patient:
+                                                                </label>
+                                                                <input type="text" class="form-control"
+                                                                    aria-describedby="emailHelp" name="patient"
+                                                                    value="<%=c.patient%>" readonly />
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-12">
+                                                            <div class="mb-3 form-floating">
+                                                                <textarea class="form-control"
+                                                                    placeholder="Prefered Prescription"
+                                                                    id="floatingTextarea2" style="height: 100px"
+                                                                    name="prescription"
+                                                                    readonly><%=c.prescription%></textarea>
+                                                                <label for="floatingTextarea2">Prefered
+                                                                    Prescription</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-12">
+                                                            <div class="input-group mb-3">
+                                                                <span class="input-group-text w-50 btn btn-outline-info text-dark"
+                                                                    id="basic-addon2">Set Amount :</span>
+                                                                <input type="number" class="form-control"
+                                                                    placeholder="Enter Amount in rupees"
+                                                                    aria-label="Set-Amount"
+                                                                    aria-describedby="basic-addon2" name="amount">
+                                                                
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                                    Close
+                                                </button>
+                                                <button type="submit" class="btn btn-primary">
+                                                    Set Amount
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </td>
                         </tr>
                         <%})%>
                 </tbody>

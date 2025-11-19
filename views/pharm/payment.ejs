@@ -21,9 +21,9 @@
     </div>
     <div class="container">
         <div class="col-12">
-            <div class="text-center h1">Patient Details</div>
+            <div class="text-center h1">Payment</div>
         </div>
-        <div class="col-8 offset-2">
+        <div class="col-10 offset-1">
             <table class="table table-striped-columns table-bordered">
                 <thead>
                     <tr>
@@ -33,6 +33,7 @@
                         <th scope="col">Prescription</th>
                         <th scope="col">Amount</th>
                         <th scope="col">Purchased</th>
+                        <th scope="col">Reset</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -44,6 +45,8 @@
                             <td><%=c.prescription%></td>
                             <td><%=c.prescriptionAmount%></td>
                             <td><a href="/pharm/payment/<%=c.id%>" class="btn <%= c.prescriptionPurchased ? 'btn-success' : 'btn-danger' %>" onclick="toggleButton.call(this)" id="<%=c.id%>"><%= c.prescriptionPurchased ? 'yes' : 'No' %></a></td>
+                            <td><a href="/pharm/payment/reset/<%=c.id%>" class="btn btn-outline-warning">Reset Payment</a></td>
+
                         </tr>
                         <%})%>
                 </tbody>

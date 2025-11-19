@@ -13,8 +13,22 @@ exports.GetPharmHome = (req, res) => {
 exports.GetBilling = async (req, res) => {
     try {
         let patient = await Patient.find()
-        let consultation = await Consultation.find()
+        let consultation = await Consultation.find({prescriptionAmount:0})
         return res.render('pharm/billing', { username: req.user.name ,consultation})
+    } catch (e) {
+        console.log(e)
+        return res.send('something went wrong')
+    }
+}
+
+exports.Billing = async (req, res) => {
+    try {
+        console.log(req.body)
+        let {cid,amount,patient} = req.body
+        let consultation = await Consultation.findOne({id:cid,patient:patient})
+        consultation.prescriptionAmount = amount
+        consultation.save()
+        return res.redirect('/pharm/billing')
     } catch (e) {
         console.log(e)
         return res.send('something went wrong')
@@ -39,6 +53,20 @@ exports.PrescriptionPurchased = async (req, res) => {
         let bill = await Consultation.findOne({id:req.params.cid})
         bill.prescriptionPurchased = bill.prescriptionPurchased === false
         bill.save()
+        return res.redirect('/pharm/payment')
+    } catch (e) {
+        console.log(e)
+        return res.send('something went wrong')
+    }
+}
+
+exports.AmountReset = async (req, res) => {
+    try {
+        // let amount = 0
+        let id = req.params.cid
+        let consultation = await Consultation.findOne({id:id})
+        consultation.prescriptionAmount = 0
+        consultation.save()
         return res.redirect('/pharm/payment')
     } catch (e) {
         console.log(e)
